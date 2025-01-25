@@ -12,9 +12,9 @@ body {
 
 /* Navbar */
 .navbar {
-    background-color: #4CAF50;
+    background-color: hsl(115, 85%, 30%);
     color: #fff!important;
-    padding: 15px;
+    padding: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -47,12 +47,21 @@ body {
     align-items: center;
     justify-content: center;
 }
+.mainCategoryDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 1vh;
+    padding-top: 50px;
+}
 .product-list {
     display: flex;
     flex-wrap: wrap;
     gap: 50px;
     /* background-color: pink; */
     /* justify-content: space-between; */
+    
     padding: 20px;
     width: 100%;
     align-items: center;
@@ -67,7 +76,7 @@ body {
     padding: 20px;
     background-color: #fff;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 20px;
     text-align: center;
     position: relative;
     
@@ -101,14 +110,26 @@ body {
     background-color: #e74c3c;
     color: #fff;
     border: none;
+    border-radius: 20px;
     padding: 10px 20px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
     margin-top: 10px;
 }
 
+.product-button-added {
+    background-color: #1a1919;
+    color: #dfdfdf;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: not-allowed;
+    margin-top: 10px;
+}
+
 .product-button:hover {
-    background-color: #c0392b;
+    background-color: #4f1b1b;
+    border-radius: 15px;
 }
 
 /* Pseudo-elements - Sale badge */
@@ -150,6 +171,7 @@ body {
     height: 70px;
     width: 70px;
     border-radius: 70%;
+    padding: 14px;
     
 }
 
@@ -163,6 +185,8 @@ body {
 .cart{
     color: white;
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .cart_quantity_count{
     margin-top: 16px;
@@ -198,7 +222,7 @@ body {
 /* ProductList.css */
 
 .product-button {
-    background-color: #4CAF50; /* Green */
+    background-color: hsl(115, 85%, 30%); /* Green */
     border: none;
     color: white;
     padding: 10px 20px;
@@ -212,7 +236,7 @@ body {
   }
   
   .product-button:hover {
-    background-color: #45a049;
+    background-color: hsl(115, 85%, 30%);
   }
   
   .product-button.added-to-cart {

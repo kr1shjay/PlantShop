@@ -1,10 +1,30 @@
 import React, { useState,useEffect } from 'react';
 import './ProductList.css'
 import CartItem from './CartItem';
-function ProductList() {
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem } from './CreateSlice';
+
+function ProductList(props) {
     const [showCart, setShowCart] = useState(false); 
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
-
+    const [cart, setCart] = useState([]); // State to store the items added to the cart
+    const dispatch = useDispatch();
+    const cartItems=useSelector(state => state.cart.items);
+    console.log(cartItems);
+    // setCart(cartItems);
+    useEffect(() => {
+        
+    }, []);
+    const alreadyInCart = (itemName) => {
+        return cartItems.some((item) => item.name === itemName);
+    }
+    const handleAddToCart = (item) => {
+        console.log("clicked");
+        dispatch(addItem(item));
+    }
+    const totalItems = () => {
+        return cartItems.reduce((total, item) => total + item.quantity, 0);
+    }
     const plantsArray = [
         {
             category: "Air Purifying Plants",
@@ -213,7 +233,7 @@ function ProductList() {
         }
     ];
    const styleObj={
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#242424',
     color: '#fff!important',
     padding: '15px',
     display: 'flex',
@@ -229,7 +249,7 @@ function ProductList() {
    }
    const styleA={
     color: 'white',
-    fontSize: '30px',
+    fontSize: '21px',
     textDecoration: 'none',
    }
    const handleCartClick = (e) => {
@@ -243,6 +263,7 @@ const handlePlantsClick = (e) => {
 };
 
    const handleContinueShopping = (e) => {
+    console.log("clicked");
     e.preventDefault();
     setShowCart(false);
   };
@@ -250,24 +271,42 @@ const handlePlantsClick = (e) => {
         <div>
              <div className="navbar" style={styleObj}>
             <div className="tag">
-               <div className="luxury">
-               <img src="https://cdn.pixabay.com/photo/2020/08/05/13/12/eco-5465432_1280.png" alt="" />
-               <a href="/" style={{textDecoration:'none'}}>
+               <div style={{cursor:"pointer"}} onClick={props.toLanding} className="luxury">
+               <img src="https://s3.us-east-1.amazonaws.com/cdn.designcrowd.com/blog/101-plant-logos-for-creative-ideas/nature-plant-environment-by-bryad-brandcrowd.png" alt="" />
+               <a   style={{textDecoration:'none'}}>
                         <div>
-                    <h3 style={{color:'white'}}>Paradise Nursery</h3>
-                    <i style={{color:'white'}}>Where Green Meets Serenity</i>
+                    <h3 style={{color:'white'}}>EcoBloom</h3>
+                    <i style={{color:'white'}}>“Nature Meets Innovation”</i>
                     </div>
                     </a>
                 </div>
               
             </div>
             <div style={styleObjUl}>
+                
                 <div> <a href="#" onClick={(e)=>handlePlantsClick(e)} style={styleA}>Plants</a></div>
-                <div> <a href="#" onClick={(e) => handleCartClick(e)} style={styleA}><h1 className='cart'><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" id="IconChangeColor" height="68" width="68"><rect width="156" height="156" fill="none"></rect><circle cx="80" cy="216" r="12"></circle><circle cx="184" cy="216" r="12"></circle><path d="M42.3,72H221.7l-26.4,92.4A15.9,15.9,0,0,1,179.9,176H84.1a15.9,15.9,0,0,1-15.4-11.6L32.5,37.8A8,8,0,0,0,24.8,32H8" fill="none" stroke="#faf9f9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" id="mainIconPathAttribute"></path></svg></h1></a></div>
+                <div> <a href="#" onClick={(e) => handleCartClick(e)} style={styleA}><h1 className='cart'><label style={{zIndex:1,position:"fixed",fontSize:"1.2rem",cursor:"pointer"}}>{totalItems()}</label>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" id="IconChangeColor" height="58" width="58">0<rect width="156" height="156" fill="none"></rect><circle cx="80" fill='#fff' cy="216" r="12"></circle><circle cx="184" fill='#fff' cy="216" r="12"></circle><path d="M42.3,72H221.7l-26.4,92.4A15.9,15.9,0,0,1,179.9,176H84.1a15.9,15.9,0,0,1-15.4-11.6L32.5,37.8A8,8,0,0,0,24.8,32H8" fill="none" stroke="#faf9f9" stroke-linecap="round" stroke-linejoin="round" stroke-width="10" id="mainIconPathAttribute"></path></svg>
+                {/* <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 92 92" id="Cart">  <path d="M91.8 27.3 81.1 61c-.8 2.4-2.9 4-5.4 4H34.4c-2.4 0-4.7-1.5-5.5-3.7L13.1 19H4c-2.2 0-4-1.8-4-4s1.8-4 4-4h11.9c1.7 0 3.2 1.1 3.8 2.7L36 57h38l8.5-27H35.4c-2.2 0-4-1.8-4-4s1.8-4 4-4H88c1.3 0 2.5.7 3.2 1.7.8 1 1 2.4.6 3.6zm-55.4 43c-1.7 0-3.4.7-4.6 1.9-1.2 1.2-1.9 2.9-1.9 4.6 0 1.7.7 3.4 1.9 4.6 1.2 1.2 2.9 1.9 4.6 1.9s3.4-.7 4.6-1.9c1.2-1.2 1.9-2.9 1.9-4.6 0-1.7-.7-3.4-1.9-4.6-1.2-1.2-2.9-1.9-4.6-1.9zm35.9 0c-1.7 0-3.4.7-4.6 1.9s-1.9 2.9-1.9 4.6c0 1.7.7 3.4 1.9 4.6 1.2 1.2 2.9 1.9 4.6 1.9 1.7 0 3.4-.7 4.6-1.9 1.2-1.2 1.9-2.9 1.9-4.6 0-1.7-.7-3.4-1.9-4.6s-2.9-1.9-4.6-1.9z" fill="#34a853" class="color000000 svgShape"></path></svg> */}
+               
+                </h1></a></div>
             </div>
         </div>
         {!showCart? (
         <div className="product-grid">
+            <br></br>
+            {plantsArray.map((item)=><div className='mainCategoryDiv'> <h1>{item.category}</h1> 
+            <div className="product-list">
+            {item.plants.map((plant)=>
+                <div className='product-card'>
+                    <img className='product-image' src={plant.image} alt={plant.name} />
+                    <h2>{plant.name}</h2>
+                    <p>{plant.description}</p>
+                    <p style={{  fontSize:'20px', fontWeight: 'bolder' , padding: '10px'}}>{plant.cost}</p>
+                    <button style={{backgroundColor:alreadyInCart(plant.name)?"gray":"#242424"}} disabled={alreadyInCart(plant.name)? true:false} onClick={()=>handleAddToCart({name:plant.name,cost:plant.cost,image:plant.image})} className='product-button'> { alreadyInCart(plant.name) ?  "Added to Cart" : "Add to Cart" }</button>
+                </div>)}
+                 </div>
+            </div>)}
 
 
         </div>
